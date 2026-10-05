@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커뮤니케이션 랩 · 말의 기술</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./tailwind.config.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font (Noto Sans KR) -->
+    
+    <link rel="stylesheet" href="./trainer.css">
+
+<link rel="stylesheet" href="./conversation.css?v=4">
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+    <!-- Navigation Header -->
+    <header class="lab-header">
+<div class="lab-header-inner">
+<a class="lab-brand" href="./" aria-label="초상으로 돌아가기"><span class="lab-symbol">[ : ]</span><span>말의 기술</span><small>초상으로 돌아가기</small></a>
+<span class="lab-edition">PORTRAIT OF WORDS <span>/</span> LAB</span>
+<nav class="lab-nav" aria-label="훈련 화면">
+<button id="tab-dialog" onclick="switchModule('dialog')"><span>01</span> 귀 · 대화</button>
+<button id="tab-message" onclick="switchModule('message')"><span>02</span> 눈 · 문자</button>
+<button id="tab-speech" onclick="switchModule('speech')"><span>03</span> 입 · 스피치</button>
+</nav>
+</div>
+</header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- ========================================== -->
+        <!-- MODULE 1: 대화 (Conversation / High-Speed Listening Test) -->
+        <!-- ========================================== -->
+        <section id="module-dialog" class="module-content" data-state="calm" data-expression="neutral" aria-label="귀, 순간의 대화">
+            <div class="conversation-top"><div><p>01 / EAR — CONVERSATION</p><h2>말과 말 사이, 우리의 대화</h2></div><button id="conversation-restart" type="button">처음부터</button></div>
+            <div class="conversation-stage">
+                <div class="conversation-portrait" id="conversation-portrait" role="img" aria-label="상대의 무표정"><img class="expression-neutral" src="./assets/conversation/neutral.png" alt="" width="1696" height="944" decoding="async"><img class="expression-surprised" src="./assets/conversation/surprised.png" alt="" width="1696" height="944" decoding="async"><img class="expression-angry" src="./assets/conversation/angry.png" alt="" width="1696" height="944" decoding="async"><img class="expression-happy" src="./assets/conversation/happy.png" alt="" width="1696" height="944" decoding="async"></div>
+                <canvas id="conversation-canvas" class="conversation-canvas" aria-hidden="true"></canvas>
+                <div id="conversation-fragments" class="conversation-fragments" aria-hidden="true"></div>
+                <div class="conversation-sentence-wrap"><p id="conversation-speaker" class="conversation-speaker">상대의 말</p><div style="position:relative"><div id="conversation-ghost" class="conversation-ghost" aria-hidden="true"></div><p id="conversation-sentence" class="conversation-sentence" role="status" aria-live="polite"></p></div></div>
+                
+            </div>
+            <div class="conversation-bottom"><div id="conversation-mine" class="conversation-mine" aria-live="polite"></div><p id="conversation-hint" class="conversation-hint"></p>
+                <div id="conversation-actions" class="conversation-actions" aria-label="대화에 반응하기">
+                    <button type="button" data-reaction="empathy">공감하기<small>마음을 받아주기</small></button>
+                    <button type="button" data-reaction="question">질문하기<small>조금 더 알아보기</small></button>
+                    <button type="button" data-reaction="explain">설명하기<small>나의 뜻 전하기</small></button>
+                    <button type="button" data-reaction="wait">잠시 기다리기<small>말 사이를 비워두기</small></button>
+                </div>
+                <div id="conversation-end" class="conversation-end" hidden><p id="conversation-result"></p><button id="conversation-replay" type="button">다시 대화하기</button><a href="./index.html">초상으로 돌아가기</a></div>
+                <p class="conversation-caption">어제 답장을 놓친 친구와의 대화 · 약 1–2분<br>대화는 준비하는 것이 아니라, 순간적으로 반응하는 것이다.</p>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- MODULE 2: 스피치 (Speech / Script & Gesture) -->
+        <!-- ========================================== -->
+        <section id="module-speech" class="module-content hidden space-y-6">
+            <!-- Module Banner -->
+            <div class="card-glass p-6 rounded-3xl border-l-4 lab-module-intro border-l-violet-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <div class="flex items-center gap-2 text-violet-400 text-xs font-bold uppercase tracking-wider mb-1">
+                        03 / MOUTH — SPEECH
+                    </div>
+                    <h2 class="text-2xl font-bold text-white">스피치 <span>생각을 말하는 연습</span></h2>
+                    <p class="text-slate-400 text-sm mt-1">대본 곳곳에 시선 처리, 손짓, 목소리 고조, 멈춤(Pause) 등의 이모지 제스처 태그를 배치하여 직관적인 스피치를 연습합니다.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="loadSampleSpeechScript()" class="px-4 py-2.5 rounded-xl bg-violet-600/30 hover:bg-violet-600/50 border border-violet-500/50 text-xs font-semibold text-violet-200 transition flex items-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> 샘플 대본 불러오기
+                    </button>
+                    <button onclick="startTeleprompter()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white text-xs font-bold transition shadow-lg shadow-violet-500/25 flex items-center gap-2">
+                        <i class="fa-solid fa-play"></i> 프롬프터 스피치 모드
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Editor & Tag Palette Left -->
+                <div class="lg:col-span-7 space-y-4">
+                    <!-- Gesture Tag Toolbar -->
+                    <div class="card-glass p-4 rounded-2xl space-y-2">
+                        <div class="text-xs font-bold text-slate-300 flex items-center justify-between">
+                            <span><i class="fa-solid fa-icons text-violet-400 mr-1.5"></i> 이모지 제스처 태그 삽입 (클릭 시 커서 위치에 바로 삽입)</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 pt-1">
+                            <button onclick="insertGestureTag('✋ [손짓: 펼치기]')" class="px-3 py-1.5 bg-indigo-950 hover:bg-indigo-900 border border-indigo-500/40 text-indigo-300 rounded-xl text-xs font-bold transition flex items-center gap-1.5 hover:scale-105 active:scale-95">
+                                ✋ [손짓: 펼치기]
+                            </button>
+                            <button onclick="insertGestureTag('✊ [손짓: 주먹/강조]')" class="px-3 py-1.5 bg-indigo-950 hover:bg-indigo-900 border border-indigo-500/40 text-indigo-300 rounded-xl text-xs font-bold transition flex items-center gap-1.5 hover:scale-105 active:scale-95">
+                                ✊ [손짓: 주먹/강조]
+                            </button>
+                            <button onclick="insertGestureTag('👀 [아이컨택]')" class="px-3 py-1.5 bg-violet-950 hover:bg-violet-900 border border-violet-500/40 text-violet-300 rounded-xl text-xs font-bold transition flex items-center gap-1.5 hover:scale-105 active:scale-95">
+                                👀 [아이컨택]
+                            </button>
+                            <button onclick="insertGestureTag('😊 [밝은 미소]')" class="px-3 py-1.5 bg-pink-950 hover:bg-pink-900 border border-pink-500/40 text-pink-300 rounded-xl text-xs font-bold transition flex items-center gap-1.5 hover:scale-105 active:scale-95">
+                                😊 [밝은 미소]
+                            </button>
+                            <button onclick="insertGestureTag('🔊 [목소리 톤UP]')" class="px-3 py-1.5 bg-amber-950 hover:bg-amber-900 border border-amber-500/40 text-amber-300 rounded-xl text-xs font-bold transition flex items-center gap-1.5 hover:scale-105 active:scale-95">
+                                🔊 [목소리 톤UP]
+                            </button>
+                            <button onclick="insertGestureTag('⏸️ [잠시 멈춤 2초]')" class="px-3 py-1.5 bg-emerald-950 hover:bg-emerald-900 border border-emerald-500/40 text-emerald-300 rounded-xl text-xs font-bold transition flex items-center gap-1.5 hover:scale-105 active:scale-95">
+                                ⏸️ [잠시 멈춤 2초]
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Main Script Editor TextArea -->
+                    <div class="card-glass p-5 rounded-3xl space-y-3">
+                        <div class="flex items-center justify-between text-xs text-slate-400">
+                            <span>스피치 대본 작성 영역</span>
+                            <span id="script-char-count">0자 작성됨</span>
+                        </div>
+                        <textarea id="speech-script-editor" oninput="updateSpeechAnalysis()" rows="14" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-2xl p-4 text-sm text-slate-100 focus:outline-none focus:border-violet-500 transition scrollbar-thin resize-none leading-relaxed font-normal" placeholder="스피치 대본을 입력하거나 위의 이모지 태그 버튼을 눌러 적절한 타이밍에 몸짓/비언어 신호를 대본 본문 안에 직접 배치해 보세요..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Analysis & Preview Right -->
+                <div class="lg:col-span-5 space-y-6">
+                    <!-- Speech Delivery Stats Card -->
+                    <div class="card-glass p-5 rounded-3xl space-y-4">
+                        <h4 class="font-bold text-sm text-slate-200 border-b border-slate-800 pb-2">
+                            <i class="fa-solid fa-chart-pie text-violet-400 mr-2"></i> 대본 연출 데이터 분석
+                        </h4>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-slate-900/80 p-3 rounded-2xl border border-slate-800 text-center">
+                                <div class="text-xs text-slate-400">예상 발표 시간</div>
+                                <div id="stat-est-time" class="text-lg font-black text-violet-400 mt-0.5">00:00</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-2xl border border-slate-800 text-center">
+                                <div class="text-xs text-slate-400">총 제스처 태그 수</div>
+                                <div id="stat-tag-count" class="text-lg font-black text-indigo-400 mt-0.5">0개</div>
+                            </div>
+                        </div>
+
+                        <!-- Tag Density List -->
+                        <div class="space-y-2 text-xs">
+                            <span class="text-slate-400 font-medium">배치된 비언어 신호 구성:</span>
+                            <div id="tag-breakdown-list" class="flex flex-wrap gap-1.5 pt-1">
+                                <span class="text-slate-500 text-xs italic">태그를 추가하면 여기에 구성비가 표시됩니다.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Speech Tip Box -->
+                    <div class="card-glass p-5 rounded-3xl space-y-3">
+                        <h4 class="font-bold text-sm text-violet-300 flex items-center gap-2">
+                            <i class="fa-solid fa-person-chalkboard"></i> 메라비언의 법칙 (38-55-7 법칙)
+                        </h4>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            메시지 전달에서 **말의 내용(7%)**보다 **시각적 요소(몸짓, 눈빛 55%)**와 **청각적 요소(목소리 톤, 억양 38%)**가 설득력에 훨씬 결정적인 영향을 미칩니다. 핵심 단어를 말하기 직전 **2초간 멈춤(Pause)**을 주면 대중의 시선이 집중됩니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Teleprompter Modal View -->
+        <div id="teleprompter-modal" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl hidden flex-col justify-between p-6">
+            <div class="max-w-4xl mx-auto w-full flex justify-between items-center border-b border-slate-800 pb-4">
+                <div class="flex items-center gap-3">
+                    <span class="w-3 h-3 rounded-full bg-rose-500 animate-pulse"></span>
+                    <h3 class="font-bold text-lg text-white">프롬프터 실전 연습 모드</h3>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                        <span>스크롤 속도:</span>
+                        <input type="range" id="prompter-speed" min="1" max="5" value="2" class="w-24 accent-violet-500">
+                    </div>
+                    <button onclick="togglePrompterPlay()" id="prompter-play-btn" class="px-4 py-2 bg-violet-600 text-white rounded-xl text-xs font-bold hover:bg-violet-500 transition">
+                        일시정지
+                    </button>
+                    <button onclick="closeTeleprompter()" class="px-3 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs hover:text-white transition">
+                        닫기 <i class="fa-solid fa-xmark ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Prompter Display Area -->
+            <div id="prompter-viewport" class="max-w-3xl mx-auto w-full flex-grow my-8 overflow-y-auto px-6 py-12 scrollbar-thin rounded-3xl bg-slate-900/60 border border-slate-800 space-y-8 text-center">
+                <!-- Script chunks injected here -->
+            </div>
+
+            <div class="max-w-4xl mx-auto w-full text-center text-xs text-slate-500">
+                대본 속 제스처 및 목소리 연출 태그에 맞춰 리듬감 있게 스피치를 진행해 보세요.
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- MODULE 3: 문자 (Messaging / Custom 4-Step Builder)  -->
+        <!-- ========================================== -->
+        <section id="module-message" class="module-content hidden space-y-6">
+            <!-- Module Banner -->
+            <div class="card-glass p-6 rounded-3xl border-l-4 lab-module-intro border-l-pink-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <div class="flex items-center gap-2 text-pink-400 text-xs font-bold uppercase tracking-wider mb-1">
+                        02 / EYE — MESSAGE
+                    </div>
+                    <h2 class="text-2xl font-bold text-white">문자 <span>의도를 쓰는 연습</span></h2>
+                    <p class="text-slate-400 text-sm mt-1">[상황 → 감정 → 이유 → 요청] 4단계에 직접 내용을 적어 전하고 싶은 메시지를 완성합니다.</p>
+                </div>
+
+
+            </div>
+
+<div class="chat-presets"><button class="chat-reset" onclick="clearCustomFields()">전체 지우기</button></div>
+<div class="chat-workspace"><div class="chat-editor"><div class="chat-editor-heading"><span>01 / WRITE</span><h3>말풍선에 마음을 담아보세요.</h3></div>
+<div class="chat-date">상황 · 감정 · 이유 · 요청</div>
+<div class="chat-exchange"><div class="chat-coach"><span class="chat-avatar" aria-hidden="true">[:]</span><div><span class="chat-speaker">말의 기술 · 상황</span><p class="chat-received">무슨 일이 있었나요? 감정을 빼고 사실부터 적어주세요.</p></div></div><div class="chat-answer"><label class="sr-only" for="input-situation">상황</label><textarea id="input-situation" oninput="updateAssembledText()" rows="3" placeholder="예: 갑자기 급한 업무가 생겨서"></textarea><span class="chat-answer-label">나 · 상황</span></div></div><div class="chat-exchange"><div class="chat-coach"><span class="chat-avatar" aria-hidden="true">[:]</span><div><span class="chat-speaker">말의 기술 · 감정</span><p class="chat-received">그 일로 어떤 마음이 들었나요? 내 감정을 솔직하게 표현해주세요.</p></div></div><div class="chat-answer"><label class="sr-only" for="input-emotion">감정</label><textarea id="input-emotion" oninput="updateAssembledText()" rows="3" placeholder="예: 마음이 조급하고 약속을 바꾸게 되어 미안해요."></textarea><span class="chat-answer-label">나 · 감정</span></div></div><div class="chat-exchange"><div class="chat-coach"><span class="chat-avatar" aria-hidden="true">[:]</span><div><span class="chat-speaker">말의 기술 · 이유</span><p class="chat-received">왜 이런 상황이 생겼나요? 상대가 이해할 수 있게 배경을 알려주세요.</p></div></div><div class="chat-answer"><label class="sr-only" for="input-reason">이유</label><textarea id="input-reason" oninput="updateAssembledText()" rows="3" placeholder="예: 오늘 안에 기획안을 수정해야 해서"></textarea><span class="chat-answer-label">나 · 이유</span></div></div><div class="chat-exchange"><div class="chat-coach"><span class="chat-avatar" aria-hidden="true">[:]</span><div><span class="chat-speaker">말의 기술 · 요청</span><p class="chat-received">상대에게 무엇을 부탁하고 싶나요? 구체적인 행동을 적어주세요.</p></div></div><div class="chat-answer"><label class="sr-only" for="input-request">요청</label><textarea id="input-request" oninput="updateAssembledText()" rows="3" placeholder="예: 약속 시간을 한 시간만 늦춰줄 수 있을까요?"></textarea><span class="chat-answer-label">나 · 요청</span></div></div></div><aside class="chat-preview"><div class="chat-preview-header"><span class="chat-avatar" aria-hidden="true">[:]</span><div><h3>마음을 전하는 대화</h3><p>완성된 메시지 미리보기</p></div></div><div class="chat-preview-body"><div class="chat-date">내가 하는 말이 나를 만든다</div><div class="chat-coach"><span class="chat-avatar" aria-hidden="true">[:]</span><div><span class="chat-speaker">말의 기술</span><p class="chat-received">어떤 마음을 전하고 싶나요?<br>작성한 내용을 하나의 메시지로 모아볼게요.</p></div></div><div class="chat-result-row"><span class="chat-preview-note">미리보기</span><div class="chat-sent"><p id="assembled-text-output" aria-live="polite"></p></div></div><div class="chat-diagnostics" aria-label="문장 구성 확인"><span>상황 <b id="diag-sit">미입력</b></span><span>감정 <b id="diag-emo">미입력</b></span><span>이유 <b id="diag-rea">미입력</b></span><span>요청 <b id="diag-req">미입력</b></span></div></div><div class="chat-preview-footer"><span id="char-counter">0자</span><button onclick="copyAssembledText()">메시지 복사</button></div><div id="toast-message" class="hidden chat-toast">메시지를 복사했어요.</div></aside></div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="lab-footer"><span>EVERY WORD LEAVES A SHAPE.</span><span>내가 하는 말이, 나를 결정한다.</span></footer>
+
+    <!-- Application Logic Script -->
+    <script src="./conversation-data.js?v=1"></script>
+    <script src="./conversation-face-data.js?v=1"></script>
+    <script src="./conversation-portrait.js?v=3"></script>
+    <script src="./conversation.js?v=7"></script>
+    <script src="./trainer.js"></script>
+</body>
+</html>

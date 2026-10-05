@@ -1,0 +1,11 @@
+말의 기술 — 3D model attribution
+
+Infinite, 3D Head Scan by Lee Perry-Smith / Infinite Realities.
+Source: https://github.com/mrdoob/three.js/tree/dev/examples/models/gltf/LeePerrySmith
+Based on a work at www.triplegangers.com.
+Licensed under Creative Commons Attribution 3.0 Unported:
+https://creativecommons.org/licenses/by/3.0/
+
+Adaptations for this site: uniformly scaled, surface-sampled into a point cloud,
+and rendered with monochrome ASCII / Korean characters and dynamic lighting.
+No photographic textures are used. Original anatomical proportions are preserved.
